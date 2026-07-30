@@ -10,7 +10,7 @@ const seed: Task[] = [
   { id: 4, title: "阅读设计系统更新", time: "明天", done: false, tone: "pink" },
 ];
 const nav = ["总览", "我的任务", "项目", "日历", "笔记"];
-const icons = ["◫", "✓", "◇", "□", "✦"];
+const icons = ["\u25a6", "\u2713", "\u25c8", "\u25a3", "\u270e"];
 
 export default function Workspace({ initialActive }: { initialActive: string }) {
   const [active, setActive] = useState(initialActive);
@@ -28,7 +28,6 @@ export default function Workspace({ initialActive }: { initialActive: string }) 
       <a className="brand" href="?section=%E6%80%BB%E8%A7%88" onClick={(event) => select(event, "\u603b\u89c8")}><i>亮</i><span>亮的工作台</span></a>
       <p className="label">工作空间</p>
       <nav>{nav.map((item, index) => <a key={item} className={active === item ? "nav active" : "nav"} href={`?section=${encodeURIComponent(item)}`} onClick={(event) => { select(event, item); setMobileMenu(false); }}><b>{icons[index]}</b><span>{item}</span></a>)}</nav>
-      <div className="side-bottom"><div className="profile"><i>Z</i><span><strong>ZJL</strong><small>个人空间</small></span><a className="settings-link" href="?section=%E8%AE%BE%E7%BD%AE" aria-label="\u6253\u5f00\u8bbe\u7f6e" onClick={(event) => select(event, "\u8bbe\u7f6e")}>...</a></div></div>
     </aside>
     <section className="content" id="top">
       <header><div className="mobile-brand"><i>亮</i> 亮的工作台</div><div className="today">☼　星期三，7月30日</div></header>

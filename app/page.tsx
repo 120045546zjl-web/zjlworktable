@@ -9,7 +9,7 @@ const seed: Task[] = [
   { id: 3, title: "给产品团队同步进展", time: "今天 · 16:30", done: false, tone: "blue" },
   { id: 4, title: "阅读设计系统更新", time: "明天", done: false, tone: "pink" },
 ];
-const nav = ["总览", "目录", "我的任务", "项目", "日历", "笔记"];
+const nav = ["总览", "我的任务", "项目", "日历", "笔记"];
 
 export default function Home() {
   const [active, setActive] = useState("总览");
@@ -21,7 +21,8 @@ export default function Home() {
     <aside className="sidebar">
       <a className="brand" href="#top"><i>m</i><span>Mori</span></a>
       <p className="label">工作空间</p>
-      <nav>{nav.map((item, index) => <button key={item} className={active === item ? "nav active" : "nav"} onClick={() => setActive(item)}><b>{["◫", "☷", "✓", "◇", "□", "✦"][index]}</b><span>{item}</span></button>)}</nav>
+      <nav>{nav.map((item, index) => <button key={item} className={active === item ? "nav active" : "nav"} onClick={() => setActive(item)}><b>{["◫", "✓", "◇", "□", "✦"][index]}</b><span>{item}</span></button>)}</nav>
+      <section className="catalog" aria-label="目录"><p className="label">目录</p><button className="catalog-item selected"><span>▣</span>个人工作台</button><button className="catalog-item"><span>◻</span>项目归档</button><button className="catalog-item"><span>◇</span>灵感收集</button><button className="catalog-item"><span>◌</span>每周复盘</button></section>
       <div className="side-bottom"><div className="quote"><em>✦</em><p>让每一天都有一点进展。</p><button onClick={() => setFocus(!focus)}>{focus ? "退出专注" : "开启专注"}</button></div><div className="profile"><i>Z</i><span><strong>ZJL</strong><small>个人空间</small></span><b>···</b></div></div>
     </aside>
     <section className="content" id="top">
@@ -37,4 +38,7 @@ export default function Home() {
   </main>;
 }
 function Project({icon,name,info,percent,color}:{icon:string;name:string;info:string;percent:number;color:string}) { return <div className="project"><div className={`project-icon ${color}`}>{icon}</div><div><b>{name}</b><small>{info}</small></div><strong>{percent}%</strong><p><i className={color} style={{width:`${percent}%`}}/></p></div> }
+
+
+
 

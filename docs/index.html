@@ -12,7 +12,19 @@
     '\u7b14\u8bb0': '<div class="intro"><div><span class="ey">\u5de5\u4f5c\u7a7a\u95f4 / \u7b14\u8bb0</span><h1>\u7b14\u8bb0</h1><span style="color:#8d8991">\u8bb0\u5f55\u7075\u611f\u3001\u51b3\u5b9a\u548c\u4e0b\u4e00\u6b65\u3002</span></div></div><article class="card"><small>\u4eca\u5929</small><h2>\u4ea7\u54c1\u7075\u611f\u4e0e\u5f85\u9a8c\u8bc1\u7684\u60f3\u6cd5</h2><p style="color:#85808a">\u628a\u503c\u5f97\u7ee7\u7eed\u63a8\u6572\u7684\u4e8b\u60c5\u5148\u8bb0\u4e0b\u6765\u3002</p><hr style="border:0;border-top:1px solid #eee"><small>\u672c\u5468</small><h2>\u4e2a\u4eba\u5de5\u4f5c\u53f0\u7684\u4f18\u5316\u65b9\u5411</h2></article>',
     '\u8bbe\u7f6e': '<div class="intro"><div><span class="ey">\u5de5\u4f5c\u7a7a\u95f4 / \u8bbe\u7f6e</span><h1>\u8bbe\u7f6e</h1><span style="color:#8d8991">\u8c03\u6574\u5de5\u4f5c\u53f0\u7684\u5916\u89c2\u548c\u5e03\u5c40\u3002</span></div></div><article class="card"><h2>\u5de5\u4f5c\u53f0\u5916\u89c2</h2><div class="task">\u7d27\u51d1\u5e03\u5c40 <span style="float:right">\u25cf</span></div><div class="task">\u663e\u793a\u4fa7\u8fb9\u680f <span style="float:right">\u25cf</span></div><div class="task">\u67d4\u548c\u5706\u89d2 <span style="float:right">\u25cf</span></div></article>'
   };
-  const render = (name) => { content.innerHTML = name === names[0] ? initial : pages[name]; document.querySelectorAll('.nav button').forEach((b, i) => b.classList.toggle('active', i === names.indexOf(name))); side.classList.remove('open'); };
+  const bindTasks = () => document.querySelectorAll('.task').forEach((task) => {
+    if (task.dataset.bound) return;
+    task.dataset.bound = 'true';
+    task.dataset.title = task.textContent.trim().replace(/^[\u2611\u25a1]\s*/, '');
+    task.tabIndex = 0;
+    task.setAttribute('role', 'checkbox');
+    const update = (done) => { task.dataset.done = String(done); task.setAttribute('aria-checked', String(done)); task.innerHTML = (done ? '\u2611' : '\u25a1') + '\u3000' + task.dataset.title; task.style.cursor = 'pointer'; task.style.textDecoration = done ? 'line-through' : 'none'; task.style.color = done ? '#a19da5' : ''; };
+    update(task.textContent.includes('\u2611'));
+    task.addEventListener('click', () => update(task.dataset.done !== 'true'));
+    task.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); update(task.dataset.done !== 'true'); } });
+  });
+  const render = (name) => { content.innerHTML = name === names[0] ? initial : pages[name]; document.querySelectorAll('.nav button').forEach((b, i) => b.classList.toggle('active', i === names.indexOf(name))); side.classList.remove('open'); bindTasks(); };
   document.querySelectorAll('.nav button').forEach((button, index) => { button.type = 'button'; button.addEventListener('click', () => render(names[index])); });
+  bindTasks();
 })();
 </script></body></html>

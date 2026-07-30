@@ -15,4 +15,4 @@
   const render = (name) => { content.innerHTML = name === names[0] ? initial : pages[name]; document.querySelectorAll('.nav button').forEach((b, i) => b.classList.toggle('active', i === names.indexOf(name))); side.classList.remove('open'); };
   document.querySelectorAll('.nav button').forEach((button, index) => { button.type = 'button'; button.addEventListener('click', () => render(names[index])); });
 })();
-</script>
+</script></body></html>
